@@ -1,0 +1,97 @@
+<view>
+    <view class="dqwz flex4">
+        <image src="../../img/dqdw.png"></image>
+        <view class="gobyndsingle">当前位置：{{weizhi}}</view>
+    </view>
+    <view class="head">
+        <image class="headimg" src="{{url}}{{lbarr[0].logo}}"></image>
+        <view class="page__bd">
+            <view class="weui-panel__hd">
+                <view class="weui-search-bar">
+                    <view class="weui-search-bar__form">
+                        <view class="weui-search-bar__box">
+                            <icon class="weui-icon-search_in-box" size="16" type="search"></icon>
+                            <input bindinput="inputTyping" class="weui-search-bar__input" focus="{{inputShowed}}" placeholder="请输入分店名称" placeholderStyle="font-size:26rpx;" type="text" value="{{inputVal}}"></input>
+                            <view bindtap="clearInput" class="weui-icon-clear" wx:if="{{inputVal.length>0}}">
+                                <icon size="14" type="clear"></icon>
+                            </view>
+                        </view>
+                        <label bindtap="showInput" class="weui-search-bar__label" hidden="{{inputShowed}}">
+                            <icon class="weui-icon-search" size="18" type="search"></icon>
+                            <view class="weui-search-bar__text">搜索</view>
+                        </label>
+                    </view>
+                    <view bindtap="searchData" class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" style="color:{{xtxx.link_color}}">搜索</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="bd">
+        <view class="paixu">
+            <view bindtap="tabClick" class="{{activeIndex==index?'selected':'default'}}" id="{{index}}" wx:for="{{listarr}}" wx:key="*this">{{item}}
+          </view>
+        </view>
+        <view class="jzz" hidden="{{qqsj}}">
+            <image class="Rotation" src="../../img/jzz.png"></image>
+            <view>加载中...</view>
+        </view>
+        <view class="mdlist" hidden="{{activeIndex==1}}">
+            <block wx:if="{{qqsj}}">
+                <view bindtap="tzsj" class="md" data-appid="{{item.appid}}" data-sjid="{{item.id}}" data-type="{{item.type}}" wx:if="{{tjstorelist.length!=0}}" wx:for="{{tjstorelist}}">
+                    <image class="mdbgimg" src="{{url}}{{item.md_img2}}"></image>
+                    <view class="mdzz"></view>
+                    <view class="mdxx">
+                        <view class="mdname">{{item.name}}</view>
+                        <view class="mdjl">距您{{item.aa}}，访问量{{item.sentiment}}</view>
+                    </view>
+                    <view class="dz flex-center">
+                        <image class="dzimg" src="../../img/dz.png"></image>
+                        <view class="gobyndsingle">{{item.address}}</view>
+                    </view>
+                </view>
+                <view class="jzz" hidden="{{mygd}}">
+                    <image class="Rotation" src="../../img/jzz.png"></image>
+                    <view>加载中...</view>
+                </view>
+                <view class="kong" wx:if="{{tjstorelist.length==0}}">
+                    <image src="../../img/wushuju.png"></image>
+                    <view>暂无符合您搜索的数据</view>
+                </view>
+                <view class="jzwb" wx:if="{{mygd}}">
+                    <view class="hx"></view>
+                    <view class="wz">加载完毕</view>
+                    <view class="hx"></view>
+                </view>
+            </block>
+        </view>
+        <view class="mdlist" hidden="{{activeIndex!=1}}">
+            <block wx:if="{{qqsj}}">
+                <view bindtap="tzsj" class="md" data-appid="{{item.appid}}" data-sjid="{{item.id}}" data-type="{{item.type}}" wx:if="{{jlstorelist.length!=0}}" wx:for="{{jlstorelist}}">
+                    <image class="mdbgimg" src="{{url}}{{item.md_img2}}"></image>
+                    <view class="mdzz"></view>
+                    <view class="mdxx">
+                        <view class="mdname">{{item.name}}</view>
+                        <view class="mdjl">距您{{item.aa}}，访问量{{item.sentiment}}</view>
+                    </view>
+                    <view class="dz flex-center">
+                        <image class="dzimg" src="../../img/dz.png"></image>
+                        <view class="gobyndsingle">{{item.address}}</view>
+                    </view>
+                </view>
+                <view class="jzz" hidden="{{mygd}}">
+                    <image class="Rotation" src="../../img/jzz.png"></image>
+                    <view>加载中...</view>
+                </view>
+                <view class="kong" wx:if="{{jlstorelist.length==0}}">
+                    <image src="../../img/wushuju.png"></image>
+                    <view>暂无符合您搜索的数据</view>
+                </view>
+                <view class="jzwb" wx:if="{{mygd}}">
+                    <view class="hx"></view>
+                    <view class="wz">加载完毕</view>
+                    <view class="hx"></view>
+                </view>
+            </block>
+        </view>
+    </view>
+</view>

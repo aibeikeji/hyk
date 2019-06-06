@@ -1,0 +1,67 @@
+<view class="vip">
+    <view class="vheader">
+        <image class="vhimg" src="../../../img/vbackimg.png"></image>
+        <view class="vhbox">
+            <view class="vhtop">
+                <view style="display:flex">
+                    <image class="vhtopimg" src="../../../img/vclocktime.png"></image>
+                    <view class="">今日累计</view>
+                </view>
+                <view bindtap="tcdl" class="tcdl">
+          退出登录
+        </view>
+            </view>
+            <view class="vhbottom">
+                <view class="vhblist flex1">
+                    <view>消费（元）</view>
+                    <view class="vhbfont1" wx:if="{{zmxx.xf==null}}">0.00</view>
+                    <view class="vhbfont1" wx:else>{{zmxx.xf}}</view>
+                    <view>{{zmxx.xfnum}}笔</view>
+                </view>
+                <view class="vhblist flex1">
+                    <view>充值（元）</view>
+                    <view class="vhbfont1" wx:if="{{zmxx.cz==null}}">0.00</view>
+                    <view class="vhbfont1" wx:else>{{zmxx.cz}}</view>
+                    <view>{{zmxx.cznum}}笔</view>
+                </view>
+                <view class="vhblist flex1">
+                    <view>会员（个）</view>
+                    <view class="vhbfont1">{{zmxx.jrhy}}</view>
+                    <view>累计{{zmxx.hy}}个</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="vbanner">
+        <navigator bindtap="scan" class="vblist flex1">
+            <image class="vblistimg3" mode="aspectFit" src="../../../img/saom.png"></image>
+            <view>扣次</view>
+        </navigator>
+        <navigator class="vblist flex1" url="cklb">
+            <image class="vblistimg3" mode="aspectFit" src="../../../img/vorder.png"></image>
+            <view>次卡</view>
+        </navigator>
+        <navigator class="vblist flex1" url="xfjl">
+            <image class="vblistimg" src="../../../img/vhand.png"></image>
+            <view>消费</view>
+        </navigator>
+        <navigator class="vblist flex1" openType="redirect" url="vipuser/vipuser">
+            <image class="vblistimg2" src="../../../img/vreddaim.png"></image>
+            <view>扣费</view>
+        </navigator>
+        <navigator class="vblist flex1" openType="redirect" url="vipuser/vipuser">
+            <image class="vblistimg3" src="../../../img/vmoneydai.png"></image>
+            <view>充值</view>
+        </navigator>
+    </view>
+    <view class="vfoot">
+        <view class="vflist flex1">
+            <image class="vfimg" src="../../../img/vhomesele.png"></image>
+            <view class="vffont">商户中心</view>
+        </view>
+        <view bindtap="vipuser" class="vflist flex1">
+            <image class="vfimg" src="../../../img/vzuan.png"></image>
+            <view>会员</view>
+        </view>
+    </view>
+</view>

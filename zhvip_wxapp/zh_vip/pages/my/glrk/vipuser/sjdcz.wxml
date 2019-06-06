@@ -1,0 +1,40 @@
+<form bindsubmit="formSubmit" reportSubmit="true">
+    <view class="recharge">
+        <view class="rheader">
+            <image class="rhimg" src="{{userInfo.img}}"></image>
+            <view class="rhbox">
+                <view class="rname">{{userInfo.name}}（{{userInfo.level_name}}）</view>
+                <view class="rtel">{{userInfo.tel}}</view>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_select rbanner">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                <view class="weui-label">付款方式：</view>
+            </view>
+            <view class="weui-cell__bd">
+                <picker bindchange="bindCountryChange" name="fkfs" range="{{countries}}" value="{{countryIndex}}">
+                    <view class="weui-select weui-select_in-select-after">{{countries[countryIndex]}}</view>
+                </picker>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input rheader2">
+            <view class="weui-cell__hd">
+                <view class="weui-label">充值金额：</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input bindinput="bindInput" class="weui-input" name="czje" placeholder="0.00" type="digit"></input>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input rheader2">
+            <view class="weui-cell__hd">
+                <view class="weui-label">备注：</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" name="beizhu" placeholder="选填"></input>
+            </view>
+        </view>
+        <view class="weui-btn-area">
+            <button bindtap="showTopTips" class="weui-btn rcbtn" disabled="{{disabled}}" formType="submit" style="background:{{disabled?'#F7BC6A':'#ff7f46'}};" type="primary">确认充值</button>
+        </view>
+    </view>
+</form>

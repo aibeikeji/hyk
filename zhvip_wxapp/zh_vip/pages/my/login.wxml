@@ -1,0 +1,113 @@
+<view class="headhd">
+    <image class="bgimg" src="../../img/bgimg.png"></image>
+    <view class="head">
+        <view class="himg1">
+            <image src="../../img/vip.png"></image>
+        </view>
+        <view class="hbd">
+            <view class="hbd__hd">
+                <image class="himg" src="{{url}}{{xtxx.bq_logo}}" style="border-radius:50%;"></image>
+            </view>
+            <view class="hbd__bd">
+        欢迎办理会员卡
+      </view>
+        </view>
+        <view class="number">Tel:{{xtxx.link_tel}}</view>
+    </view>
+</view>
+<form bindreset="formReset" bindsubmit="formSubmit" reportSubmit="true">
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+                <image src="../../img/myf.png"></image>
+                <view class="weui-label">姓名
+        </view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" name="xm" placeholder="会员姓名" type="text" value="{{userInfo.nickname}}"></input>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+                <image src="../../img/hm.png"></image>
+                <view class="weui-label">号码
+        </view>
+            </view>
+            <view class="weui-cell__bd">
+                <input bindinput="hqsjh" class="weui-input" disabled="{{fsyzm}}" maxlength="11" name="sjh" placeholder="请输入手机号码" type="number" value="{{sjh}}" wx:if="{{isdx}}"></input>
+                <input class="weui-input" disabled="true" maxlength="11" name="sjh" placeholder="绑定手机号" type="number" value="{{sjh}}" wx:else></input>
+            </view>
+            <view class="weui-cell__ft">
+                <button bindtap="setVerify" class="yanz {{isyz?'':'yanz-on'}}" disabled="{{isyz}}" wx:if="{{isdx}}">{{VerifyCode}}</button>
+                <button bindgetphonenumber="getPhoneNumber" class="yanz yanz {{isbd?'':'yanz-on'}}" disabled="{{isbd}}" openType="getPhoneNumber" wx:else>{{bdsjhtext}}</button>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input" wx:if="{{isdx}}">
+            <view class="weui-cell__hd">
+                <image src="../../img/yx.png" style="height:35rpx;"></image>
+                <view class="weui-label">验证码：
+        </view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" maxlength="6" name="yanzm" placeholder="请输入短信验证码" type="number"></input>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+                <image src="../../img/rl.png"></image>
+                <view class="weui-label">生日<text style="font-size:20rpx;">(选填)</text>
+                </view>
+            </view>
+            <view class="weui-cell__bd">
+                <picker bindchange="bindDateChange" end="{{date}}" mode="date" name="sr" value="">
+                    <view class="weui-input">{{start}}</view>
+                </picker>
+            </view>
+            <view class="weui-cell__ft">
+                <image src="../../img/huise@2x.png"></image>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+                <image src="../../img/dt.png"></image>
+                <view class="weui-label">地址<text style="font-size:20rpx;">(选填)</text>
+                </view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" name="xxdz" placeholder="详细地址" type="text" value="{{weizhi}}"></input>
+            </view>
+            <view bindtap="dw" class="weui-cell__ft" style="width:60rpx;">
+                <image src="../../img/huise@2x.png"></image>
+            </view>
+        </view>
+        <block wx:if="{{xtxx.vip_qx=='1'}}">
+            <view class="xzqx">选择会员卡有效期</view>
+            <radio-group bindchange="radioChange" name="radiogroup">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
+                    <radio checked="{{item.checked}}" class="weui-check" value="{{item.id}}"></radio>
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" color="#ff7f46" size="23" type="circle" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" color="#ff7f46" size="23" type="success" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.money}}元,购买{{item.days}}天</view>
+                </label>
+            </radio-group>
+        </block>
+        <view class="read">
+            <radio checked="true" color="#ff7f46" style="zoom:80%"></radio>
+            <view>我已阅读并同意
+        <text bindtap="lookck" class="readfont">《开通会员卡协议》</text>
+            </view>
+        </view>
+    </view>
+    <view class="kkfy" wx:if="{{xtxx.vip_qx=='2'&&xtxx.opencard!='0'}}">温馨提示：开卡费用为{{xtxx.opencard}}元，将转入您的会员卡余额。</view>
+    <button class="bc" formType="submit">注册</button>
+</form>
+<view class="zhezhao" hidden="{{fwxy}}"></view>
+<view class="kcrzxy" hidden="{{fwxy}}">
+    <view class="kcrzxyhd">开通会员卡协议</view>
+    <scroll-view scrollY class="kcrzxybd" style="height: 500rpx;">
+        <rich-text nodes="{{xtxx.vip_xy}}"></rich-text>
+    </scroll-view>
+    <view bindtap="queren" class="queren">确定</view>
+</view>

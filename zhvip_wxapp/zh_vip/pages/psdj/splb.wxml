@@ -1,0 +1,124 @@
+<view class="page header-sort spnavbar">
+    <view class="fui-header">
+        <view class="searchbar">
+            <icon size="18" type="search"></icon>
+            <input bindconfirm="bindSearch" bindfocus="bindFocus" bindinput="bindInput" focus="{{focusin}}" name="search" placeholder="输入关键字进行搜索" value="{{params.keywords}}"></input>
+        </view>
+        <image bindtap="changeMode" class="icon" src="../../img/icon/{{listmode==''?'app':'viewlist'}}.png" wx:if="{{!fromsearch}}"></image>
+        <view bindtap="bindback" class="cancel" wx:if="{{fromsearch}}">取消</view>
+    </view>
+    <view class="sort">
+        <view bindtap="bindSort" class="item {{params.order==''||!params.order?'on':''}}" data-order="">
+            <view class="text">综合</view>
+        </view>
+        <view bindtap="bindSort" class="item {{params.order=='sales'?'on':''}}" data-order="sales">
+            <view class="text">销量</view>
+        </view>
+        <view bindtap="bindSort" class="item item-price {{params.order=='minprice'?'on':''}}" data-order="minprice">
+            <view class="text">价格
+        <image class="icon" src="../../img/icon/listsort{{listorder}}.png"></image>
+            </view>
+        </view>
+        <view bindtap="showFilter" class="item {{isfilter?'on':''}}">
+            <view class="text">分类
+        <image class="icon small" src="{{isfilter?'../../img/icon-red/filter.png':'../../img/icon/filter.png'}}"></image>
+            </view>
+        </view>
+    </view>
+    <view class="fui-goods-group {{listmode}}">
+        <view class="fui-goods-item" wx:for="{{list}}" wx:key="*this">
+            <navigator hoverClass="none" url="spxq?id={{item.id}}">
+                <view class="image" style="background-image:url({{url}}{{item.logo}})"></view>
+            </navigator>
+            <view class="detail">
+                <navigator hoverClass="none" url="spxq?id={{item.id}}">
+                    <view class="name">
+              {{item.name}}
+            </view>
+                </navigator>
+                <view class="price">
+                    <view class="text">
+              ￥{{item.money}}
+            </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="fui-loading" wx:if="{{loading}}">
+        <view class="icon"></view>
+        <view class="text">正在加载</view>
+    </view>
+    <view class="fui-loading empty" wx:if="{{total<10&&total>0&&!loading}}">
+        <view class="text">没有更多了</view>
+    </view>
+    <view class="fui-loading empty" wx:if="{{total<=0&&!loading}}">
+        <view class="text">暂时没有任何商品</view>
+    </view>
+    <view class="records" wx:if="{{fromsearch}}">
+        <view class="records-title" hidden="-1">
+            <view class="pull-right text-danger">换一批</view>
+            <view>热门搜索</view>
+        </view>
+        <view class="navs" hidden="-1">
+            <nav bindtap="bindnav" data-text="推子">推子</nav>
+            <nav bindtap="bindnav" data-text="推子">推子</nav>
+            <nav bindtap="bindnav" data-text="推子">推子</nav>
+        </view>
+        <block wx:if="{{searchLogList.length>0}}">
+            <view class="records-title">
+                <view bindtap="delRecord" class="pull-right text-danger">清除</view>
+                <view>历史搜索</view>
+            </view>
+            <view class="navs">
+                <nav bindtap="searchDataByLog" data-text="{{item}}" wx:for="{{searchLogList}}" wx:key="*this">{{item}}</nav>
+            </view>
+        </block>
+    </view>
+    <view class="fui-navbar" hidden="true">
+        <navigator class="nav-item true" hoverClass="none" openType="redirect" url="/pages/index/index">
+            <image class="icon"></image>
+            <text class="label">
+		商城首页	</text>
+        </navigator>
+        <navigator class="nav-item true" hoverClass="none" openType="redirect" url="/pages/shop/caregory/index">
+            <image class="icon"></image>
+            <text class="label">
+		全部分类	</text>
+        </navigator>
+        <navigator class="nav-item true" hoverClass="none" openType="redirect" url="/pages/member/cart/index">
+            <image class="icon"></image>
+            <text class="label">
+		购物车	</text>
+        </navigator>
+        <navigator class="nav-item true" hoverClass="none" openType="redirect" url="/pages/member/index/index">
+            <image class="icon"></image>
+            <text class="label">
+		会员中心	</text>
+        </navigator>
+    </view>
+    <view class="fui-toast out">
+        <view class="text"></view>
+    </view>
+    <view class="screen {{isFilterShow?'in':''}}">
+        <view class="title">选择分类</view>
+        <view class="cate" data-catlevel="1">
+            <view class="item">
+                <view wx:for="{{category_parent}}" wx:key="*this">
+                    <nav bindtap="bindCategoryEvents" class="{{category_parent_selected==item.id?'on':''}}" data-id="{{item.id}}" data-index="{{index}}" data-level="1">{{item.name}}</nav>
+                </view>
+            </view>
+            <view class="item">
+                <view wx:for="{{category_child}}" wx:key="*this">
+                    <nav bindtap="bindCategoryEvents" class="{{category_child_selected==item.id?'on':''}}" data-id="{{item.id}}" data-level="2">{{item.name}}</nav>
+                </view>
+            </view>
+        </view>
+        <view class="btns">
+            <view bindtap="bindFilterCancel" class="cancel">
+        取消筛选 </view>
+            <view bindtap="bindFilterSubmit" class="confirm">
+        确认 </view>
+        </view>
+    </view>
+</view>
+<view bindtap="showFilter" class="fui-mask {{isFilterShow?'show':'hide'}}"></view>

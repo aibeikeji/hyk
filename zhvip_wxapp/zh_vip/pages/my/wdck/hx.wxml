@@ -1,0 +1,11 @@
+<view class="container">
+    <view class="head">
+        <icon size="93" type="info"></icon>
+    </view>
+    <view class="text">是否进行扣次</view>
+    <view class="btn">
+        <form bindreset="formReset" bindsubmit="form_save" reportSubmit="true">
+            <button bindtap="hx" class="weui-btn" formType="submit" style="background-color:#f44444" type="primary">确定</button>
+        </form>
+    </view>
+</view>

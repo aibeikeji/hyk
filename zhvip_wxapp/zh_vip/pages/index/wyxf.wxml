@@ -1,0 +1,49 @@
+<view class="headhd">
+    <image class="bgimg" src="../../img/bgimg.png"></image>
+    <view class="head">
+        <view class="himg1">
+            <image src="../../img/vip.png"></image>
+        </view>
+        <view class="hbd">
+            <view class="hbd__hd">
+                <image class="himg" src="{{url}}{{xtxx.bq_logo}}" style="border-radius:50%;"></image>
+            </view>
+            <view class="hbd__bd">
+        欢迎续费会员卡
+      </view>
+        </view>
+        <view class="number">Tel:{{xtxx.link_tel}}</view>
+    </view>
+</view>
+<form bindreset="formReset" bindsubmit="formSubmit" reportSubmit="true">
+    <view class="weui-cells weui-cells_after-title">
+        <block wx:if="{{xtxx.vip_qx=='1'}}">
+            <view class="xzqx">选择会员卡有效期</view>
+            <radio-group bindchange="radioChange" name="radiogroup">
+                <label class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
+                    <radio checked="{{item.checked}}" class="weui-check" value="{{item.id}}"></radio>
+                    <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                        <icon class="weui-icon-checkbox_circle" color="#ff7f46" size="23" type="circle" wx:if="{{!item.checked}}"></icon>
+                        <icon class="weui-icon-checkbox_success" color="#ff7f46" size="23" type="success" wx:if="{{item.checked}}"></icon>
+                    </view>
+                    <view class="weui-cell__bd">{{item.money}}元,购买{{item.days}}天</view>
+                </label>
+            </radio-group>
+        </block>
+        <view class="read">
+            <radio checked="true" color="#ff7f46" style="zoom:80%"></radio>
+            <view>我已阅读并同意
+        <text bindtap="lookck" class="readfont">《会员卡协议》</text>
+            </view>
+        </view>
+    </view>
+    <button class="bc" formType="submit">续费</button>
+</form>
+<view class="zhezhao" hidden="{{fwxy}}"></view>
+<view class="kcrzxy" hidden="{{fwxy}}">
+    <view class="kcrzxyhd">会员卡协议</view>
+    <scroll-view scrollY class="kcrzxybd" style="height: 500rpx;">
+        <rich-text nodes="{{xtxx.vip_xy}}"></rich-text>
+    </scroll-view>
+    <view bindtap="queren" class="queren">确定</view>
+</view>

@@ -1,0 +1,43 @@
+<include src="/zh_vip/pages/commons/navbar/navbar.wxml"></include>
+<view class="after-navber" wx:if="{{tab_config.tabs.length>0}}">
+    <view class="flex-y-center flex-x-center" style="height: 55px;border-bottom: 1rpx solid #e3e3e3;border-top: 1rpx solid #e3e3e3;width: 100%;z-index: 999;background: #EFEFF4">
+        <navigator class="flex-y-center flex-x-center" style="width: 700rpx;height: 60rpx;background: #fff;border: 1rpx solid #e3e3e3; border-radius: 10rpx;text-align: center;font-size: 9pt;color: #b2b2b2" url="splb?fromsearch=1">
+            <image src="../../img/icon-search.png" style="width:24rpx;height: 24rpx;margin-right:10rpx "></image>
+            <text>搜索</text>
+        </navigator>
+    </view>
+    <view class="flex-row" style="height: {{window_height}}px;" wx:if="{{store.cat_style==2||store.cat_style==4}}">
+        <view class="left" style="height:{{window_height}}px;background: #fff">
+            <scroll-view class="cat-list" scrollTop="{{tab_config.tab_left}}" scrollY="true" style="height: {{window_height}}px;width: 204rpx">
+                <view bindtap="catItemClick" class="cat-item {{linheightid==index?'active':''}} flex-y-center flex-x-center" data-index="{{index}}" style="height:{{tab_config.item_height}}px" wx:for="{{tab_config.tabs}}">
+                    <view class="cat-name">{{item.name}}</view>
+                </view>
+            </scroll-view>
+        </view>
+        <view class="right" style="background: #f6dae1">
+            <scroll-view bindscroll="{{scroll}}" class="sub-cat-box cat-block-list" scrollIntoView="{{intoid}}" scrollY="true" style="height: {{window_height}}px;z-index:999;">
+                <view class="cat-small-style cat-num-3 flex-row" style="height: {{window_height}}px" wx:if="{{store.cat_style==4}}">
+                    <view id="id{{index}}" style="width:100%;" wx:for="{{tab_config.tabs}}">
+                        <view class="btname">
+                            <view class="hx"></view>
+                            <view class="wz">{{item.name}}</view>
+                            <view class="hx"></view>
+                        </view>
+                        <view class="mgfl">
+                            <view class="flex-grow-0" wx:for="{{item.type2}}">
+                                <navigator class="cat-item" url="splb?type_id={{item.id}}">
+                                    <image class="cat-icon" mode="aspectFit" src="{{url}}{{item.img}}"></image>
+                                    <view class="cat-name">{{item.name}}</view>
+                                </navigator>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </scroll-view>
+        </view>
+    </view>
+</view>
+<view class="kong" hidden="{{qbmx.length==0}}" wx:else>
+    <image src="../../img/wushuju.png"></image>
+    <view>此门店暂未添加商品~</view>
+</view>

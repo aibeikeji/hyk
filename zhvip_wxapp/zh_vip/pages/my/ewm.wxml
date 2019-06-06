@@ -1,0 +1,30 @@
+<view class="page">
+    <view class="head">
+        <view class="htext">
+            <view style=" margin-bottom: 30rpx;">
+                <image src="http://sucimg.itc.cn/avatarimg/9190e75185a44727a64bfd5043cc818f_1491734005346"></image>
+            </view>
+            <view class="hydj">
+                <image src="../../img/jp.png"></image>
+                <text>白银会员卡</text>
+            </view>
+            <view>智慧研发中心会员卡</view>
+        </view>
+    </view>
+    <view class="code">
+        <image src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515051646345&di=fd0fcc6cfe041b0258722762a213b60f&imgtype=0&src=http%3A%2F%2Fwww.eccn.com%2Fevents%2F2017%2Fosram%2Fimages%2Fweixin.gif"></image>
+        <view>80214256325841</view>
+        <view bindtap="lookck" class="syxz">
+            <image src="../../img/wenhao.png"></image>
+            <text>会员使用须知</text>
+        </view>
+    </view>
+</view>
+<view class="zhezhao" hidden="{{fwxy}}"></view>
+<view class="kcrzxy" hidden="{{fwxy}}">
+    <view class="kcrzxyhd">会员使用须知</view>
+    <scroll-view scrollY class="kcrzxybd" style="height: 500rpx;">
+        <rich-text nodes="{{fxset.tx_details}}"></rich-text>
+    </scroll-view>
+    <view bindtap="queren" class="queren">确定</view>
+</view>

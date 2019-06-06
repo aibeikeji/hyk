@@ -1,0 +1,36 @@
+<view class="container">
+    <view class="top">
+        <view>{{yhq.money}}元
+      <text style="font-size:30rpx;margin-left:10rpx;">{{yhq.name}}</text>
+        </view>
+        <image src="data:image/png;base64,{{yhq.hx_code}}"></image>
+        <view class="lq">
+            <form bindreset="formReset" bindsubmit="form_save" reportSubmit="true">
+                <button formType="submit" style="background:{{xtxx.link_color}}">收银员扫码核销</button>
+            </form>
+        </view>
+    </view>
+    <view class="xx">
+        <view class="hyuan1"></view>
+        <view class="hyuan2"></view>
+    </view>
+    <view class="bottom">
+        <navigator class="bt-2" url="../index/sjdl?sjid={{yhq.md_id}}">
+            <view>购买时间：{{yhq.lq_time}}</view>
+            <image src="../../img/jiantou1.png"></image>
+        </navigator>
+        <view class="bt-1">
+            <view>有效期至：{{yhq.time}}</view>
+        </view>
+        <view class="bt-1">
+            <view>剩余次数：{{yhq.number}}次</view>
+        </view>
+        <view class="bt-1">
+            <view>可用门店：{{yhq.store_name}}</view>
+        </view>
+        <view class="bt-3">
+            <view>使用须知</view>
+            <rich-text nodes="{{yhq.details}}"></rich-text>
+        </view>
+    </view>
+</view>

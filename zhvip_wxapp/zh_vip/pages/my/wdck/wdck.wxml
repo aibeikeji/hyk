@@ -1,0 +1,57 @@
+<view class="choice-bar">
+    <view bindtap="choiceItem" class="chioce-item chioce-item-first {{borbtm==1?'border-bottom':'border-bottom1'}}" data-item="1" hoverClass="click-once-opaque">{{activeDistrictIndexname}}
+    <image class="icon-chioce" src="{{districtChioceIcon}}"></image>
+    </view>
+    <view bindtap="choiceItem" class="chioce-item chioce-item-first {{borbtm==3?'border-bottom':'border-bottom1'}}" data-item="3" hoverClass="click-once-opaque">{{activeYhqIndexname}}
+    <image class="icon-chioce" src="{{yhqChioceIcon}}"></image>
+    </view>
+    <view class="sorting-list{{!chioceDistrictList?' chioce-list-hide':' chioce-list-show'}}">
+        <view catchtap="selectDistrict" class="sorting-item" data-index="{{index}}" hoverClass="click-once" wx:for="{{districtList}}">{{item.name}}</view>
+    </view>
+    <view class="sorting-list{{!chioceTypeList?' chioce-list-hide':' chioce-list-show'}}">
+        <scroll-view scrollY="true" style="height:500rpx;">
+            <view catchtap="selectType" class="sorting-item" data-index="{{index}}" hoverClass="click-once" id="{{item.id}}" wx:for="{{typeList}}">{{item.name}}</view>
+        </scroll-view>
+    </view>
+    <view class="sorting-list{{!chioceYhqList?' chioce-list-hide':' chioce-list-show'}}">
+        <view catchtap="selectYhq" class="sorting-item" data-index="{{item}}" hoverClass="click-once" wx:for="{{yhqList}}">{{item}}</view>
+    </view>
+</view>
+<view bindtap="hideAllChioce" class="mask" hidden="{{!chioceDistrictList&&!chioceTypeList&&!chioceYhqList}}"></view>
+<view class="flmain">
+    <view class="jzz" hidden="{{qqsj}}">
+        <image class="Rotation" src="../../../img/jzz.png"></image>
+        <view>加载中...</view>
+    </view>
+    <block wx:if="{{qqsj}}">
+        <view class="main">
+            <view bindtap="tzxq" class="block flex-row flex-y-center" data-cid="{{item.card_id}}" data-kid="{{item.id}}" style="filter: {{item.is_sx=='1'?'grayscale(100%)':''}}" wx:for="{{list}}">
+                <image class="mdlogo" src="{{url}}{{item.img}}"></image>
+                <view class="flex-grow-1">
+                    <view class="kname">{{item.name}}</view>
+                    <view class="sysl">剩余次数：{{item.number}}次</view>
+                    <view class="yxq">有效期至：{{item.time}}</view>
+                </view>
+                <view class="flex-grow-0 flex-col flex-y-center">
+                    <view class="money">￥{{item.money}}</view>
+                    <view catchtap="ljsy" class="ljgm" data-kid="{{item.id}}" wx:if="{{item.is_sx=='2'}}">立即使用</view>
+                    <navigator class="ljgm" wx:if="{{item.is_sx=='1'}}">已经失效</navigator>
+                </view>
+                <view class="zhiding" wx:if="{{item.type=='1'}}">次卡</view>
+            </view>
+        </view>
+        <view class="jzz" hidden="{{jzgd}}">
+            <image class="Rotation" src="../../../img/jzz.png"></image>
+            <view>加载更多...</view>
+        </view>
+        <view class="jzwb" wx:if="{{mygd}}">
+            <view class="hx"></view>
+            <view class="wz">加载完毕</view>
+            <view class="hx"></view>
+        </view>
+        <view class="kong" wx:if="{{list.length==0}}">
+            <image src="../../../img/wyhq.png"></image>
+            <view>暂无相关数据...</view>
+        </view>
+    </block>
+</view>

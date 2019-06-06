@@ -1,0 +1,9 @@
+<view class="container">
+    <view class="head">
+        <icon size="93" type="info"></icon>
+    </view>
+    <view class="text">是否绑定核销员</view>
+    <view class="btn">
+        <button bindtap="bdhxy" class="weui-btn" style="background-color:#f44444" type="primary">确定</button>
+    </view>
+</view>

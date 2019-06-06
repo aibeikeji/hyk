@@ -1,0 +1,374 @@
+<form bindsubmit="qrmd" reportSubmit="true">
+    <view class="bottom-bar flex-row">
+        <view class="flex-y-center flex-grow-1" style="padding: 0 24rpx">
+            <view class="flex-grow-1" style="color:#ff4544 ">
+ 总计：￥{{totalprice}} 
+
+      </view>
+        </view>
+        <button class="flex-y-center flex-grow-0 flex-x-center submit-btn" formType="submit">提交</button>
+    </view>
+</form>
+<view class="{{show_card?'no-scroll':''}} {{show_shop||show_coupon_picker||show_card?'hidden':''}}" style="padding-bottom: 129rpx">
+    <view class="flex-row flex-y-center" style="background-color:#fff;padding:0 24rpx;border-bottom:1rpx #eee solid;border-top:1rpx #eee solid;height:90rpx;" wx:if="{{send_type==0}}">
+        <view class="flex-grow-1 flex-x-center" style="height:100%;">
+            <view bindtap="getOffline" class="flex-y-center {{offline==0?'active':''}}" data-index="0" style="height:100%;">快递配送 
+
+        </view>
+        </view>
+        <view class="flex-grow-1 flex-x-center" style="height:100%;" wx:if="{{mdset.is_zt=='1'}}">
+            <view bindtap="getOffline" class="flex-y-center {{offline==1?'active':''}}" data-index="1" style="height:100%;">到店自提 
+
+        </view>
+        </view>
+    </view>
+    <navigator class="flex-row address-picker" url="xzdz" wx:if="{{offline==0}}">
+        <image src="../../img/gwl.png"></image>
+        <view class="flex-grow-1" wx:if="{{address}}">
+            <view class="flex-row" style="margin-bottom: 20rpx">
+                <view class="flex-grow-1">收货人：{{address.user_name}}</view>
+                <view class="flex-grow-0">{{address.tel}}</view>
+            </view>
+            <view>收货地址：{{address.area}}{{address.address}}</view>
+        </view>
+        <view class="flex-grow-1" wx:else>
+            <view>请选择收货地址</view>
+        </view>
+        <view class="flex-grow-0 flex-y-center">
+            <image src="../../img/jt.png" style="width: 40rpx; height: 40rpx;margin-left: 24rpx"></image>
+        </view>
+    </navigator>
+    <block wx:if="{{offline==1}}">
+        <view bindtap="ckwz" class="flex-row address-picker" data-jwd="{{mdinfo.coordinates}}">
+            <image src="{{url}}{{mdinfo.md_img}}"></image>
+            <view class="flex-grow-1">
+                <view class="flex-row">
+                    <view class="flex-grow-1">门店名称：{{mdinfo.name}}</view>
+                </view>
+                <view class="flex-row">
+                    <view class="flex-grow-1">门店地址：{{mdinfo.address}}</view>
+                </view>
+            </view>
+            <view class="flex-grow-0 flex-y-center">
+                <image src="../../img/jt.png" style="width: 40rpx;height: 40rpx;margin-left: 12rpx"></image>
+            </view>
+        </view>
+        <view class="zq flex-row flex-y-center" style="padding:10rpx 24rpx;">
+            <view class="flex-grow-0">自取时间：</view>
+            <view class="flex-grow-1">
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__bd picker">
+                        <picker bindchange="bindDateChange" mode="date" start="{{datestart}}" style=" width: 220rpx">
+                            <view class="weui-input">{{date}}</view>
+                        </picker>
+                        <view>日</view>
+                        <picker bindchange="bindTimeChange" end="23:59" mode="time" start="{{timestart}}" style=" width: 120rpx" value="{{time}}">
+                            <view class="weui-input">{{time}}</view>
+                        </picker>
+                        <view>分</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="flex-row address-picker" style="padding:10rpx 24rpx;">
+            <image src="../../img/gwl.png"></image>
+            <view class="flex-grow-1">
+                <view class="weui-cells weui-cells_after-title">
+                    <view class="weui-cell weui-cell_input">
+                        <view class="weui-cell__hd">
+                            <view class="weui-label">收货人</view>
+                        </view>
+                        <view class="weui-cell__bd">
+                            <input bindinput="KeyName" class="weui-input" placeholder="请输入收货人" value="{{name}}"></input>
+                        </view>
+                    </view>
+                    <view class="weui-cell weui-cell_input">
+                        <view class="weui-cell__hd">
+                            <view class="weui-label">联系电话</view>
+                        </view>
+                        <view class="weui-cell__bd">
+                            <input bindinput="KeyMobile" class="weui-input" placeholder="请输入联系电话" value="{{mobile}}"></input>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </block>
+    <view class="address-picker" style="padding:0 24rpx;" wx:if="{{form.is_form==1&&form.list.length>0}}">
+        <view class="form-title">{{form.name?form.name:'表单信息'}}</view>
+        <view class="form-list">
+            <view class="form-one flex-row" wx:for="{{form.list}}">
+                <view class="flex-grow-0 list-name {{item.type=='text'?'flex-y-center':''}} {{item.required==1?'required':''}}">{{item.name}}</view>
+                <view class="flex-grow-1 flex-y-center" wx:if="{{item.type=='text'}}">
+                    <input bindConfirm="formInput" bindInput="formInput" bindblur="formInput" data-index="{{index}}" placeholder="{{item.tip}}" type="text" value="{{item.default}}"></input>
+                </view>
+                <view class="flex-grow-1" wx:if="{{item.type=='textarea'}}">
+                    <textarea autoHeight="true" bindConfirm="formInput" bindInput="formInput" bindblur="formInput" data-index="{{index}}" placeholder="{{item.tip}}" style="width:auto;max-height:400rpx;z-index:-1" value="{{item.default}}"></textarea>
+                </view>
+                <block wx:if="{{item.type=='time'}}">
+                    <view class="flex-grow-1" style="justify-content:flex-end;text-align:right;">
+                        <picker bindchange="formInput" data-index="{{index}}" end="23:59" mode="time" start="00:00" value="{{item.default?item.default:'00:00'}}">
+                            <view>{{item.default?item.default:'00:00'}}</view>
+                        </picker>
+                    </view>
+                    <view class="flex-grow-0">
+                        <image class="right-jiantou" src="/images/icon-jiantou-r.png"></image>
+                    </view>
+                </block>
+                <block wx:if="{{item.type=='date'}}">
+                    <view class="flex-grow-1" style="justify-content:flex-end;text-align:right;">
+                        <picker bindchange="formInput" data-index="{{index}}" mode="date" value="{{item.default?item.default:time}}">
+                            <view>{{item.default?item.default:time}}</view>
+                        </picker>
+                    </view>
+                    <view class="flex-grow-0">
+                        <image class="right-jiantou" src="/images/icon-jiantou-r.png"></image>
+                    </view>
+                </block>
+                <view class="flex-grow-1 flex-row" style="flex-wrap:wrap" wx:if="{{item.type=='radio'}}">
+                    <view bindtap="selectForm" class="default {{v.is_selected==1?'d-active':''}}" data-index="{{index}}" data-k="{{k}}" wx:for="{{item.default_list}}" wx:for-index="k" wx:for-item="v">{{v.name}}</view>
+                </view>
+                <view class="flex-grow-1 flex-row" style="flex-wrap:wrap" wx:if="{{item.type=='checkbox'}}">
+                    <view bindtap="selectForm" class="default {{v.is_selected==1?'d-active':''}}" data-index="{{index}}" data-k="{{k}}" style="border-radius:0" wx:for="{{item.default_list}}" wx:for-index="k" wx:for-item="v">{{v.name}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="cart-list">
+        <view class="flex-row zysp">
+            <image src="../../img/hmd.png"></image>
+            <view class="flex-grow-1">
+        {{mdinfo.name}}自营商品
+      </view>
+        </view>
+        <view class="flex-col " wx:for="{{cart_list}}">
+            <view class="cart-item flex-row" style="{{item.give<=0?'border-bottom:1rpx solid #e3e3e3':''}}">
+                <view class="flex-grow-0">
+                    <image class="goods-pic" mode="aspectFill" src="{{url}}{{item.logo}}"></image>
+                </view>
+                <view class="flex-grow-1 flex-col">
+                    <view class="flex-grow-1">
+                        <view class="goods-name">{{item.name}}</view>
+                        <view class="attr-list">
+                            <view class="attr-item">{{item.spec}}
+                </view>
+                        </view>
+                    </view>
+                    <view class="flex-grow-0 flex-row">
+                        <view class="flex-grow-1 num">×{{item.num}}</view>
+                        <view class="flex-grow-0 price">￥{{item.money}}</view>
+                    </view>
+                </view>
+            </view>
+            <view class="goods-intrgral flex-row" wx:if="{{item.give>0}}">
+                <view class="flex-y-center">订单完成返回</view>
+                <view class="flex-y-center" style="color:#ff4544">{{item.give}}</view>
+                <view class="flex-y-center">积分</view>
+            </view>
+        </view>
+    </view>
+    <view class="flex-row" style="background: #fff;padding: 25rpx;border-bottom: 1rpx solid #e3e3e3;">
+        <view class="flex-grow-1">商品小计</view>
+        <view class="flex-grow-0">
+            <view style="color:#ff4544">{{xj}}元</view>
+        </view>
+    </view>
+    <view class="flex-row" style="background: #fff;padding: 25rpx;border-bottom: 1rpx solid #e3e3e3;">
+        <view class="flex-grow-1">运费：
+      <text style="font-size:24rpx;">(商品小计满{{mdset.full}}包邮)</text>
+        </view>
+        <view class="flex-grow-0">
+            <block wx:if="{{offline==0}}">
+                <view style="color:#ff4544" wx:if="{{yf==0}}">￥{{yf}}
+          <text class="yftext">￥{{mdset.freight}}</text>
+                </view>
+                <view style="color:#ff4544" wx:if="{{yf!=0}}">￥{{yf}}</view>
+            </block>
+            <view style="color:#ff4544" wx:elif="{{offline==1}}">￥0</view>
+        </view>
+    </view>
+    <view class="flex-row" style="background: #fff;padding: 25rpx;border-bottom: 1rpx solid #e3e3e3;" wx:if="{{userInfo.grade!='0'}}">
+        <view class="flex-grow-1">会员折扣：
+        <text style="font-size:24rpx;">({{userInfo.level_name}},享{{userInfo.discount/10}}折优惠)</text>
+        </view>
+        <view class="flex-grow-0">
+            <view style="color:#ff4544">-￥{{pre}}</view>
+        </view>
+    </view>
+    <view class="flex-row" style="background: #fff;padding: 25rpx;border-bottom: 1rpx solid #e3e3e3;" wx:else>
+        <view class="flex-grow-1">会员折扣</view>
+        <view class="flex-grow-0">
+            <view style="color:#999;font-size:24rpx;">您不是会员,不享受此优惠</view>
+        </view>
+    </view>
+    <view bindtap="qlq" class="flex-row" style="background: #fff;padding: 25rpx;">
+        <view class="flex-grow-0">优惠券：
+      </view>
+        <view class="flex-grow-1 flex-end flex-y-center">
+            <view style="color:#999" wx:if="{{djq.length==0&&zkq.length==0}}">暂无可用优惠券</view>
+            <view style="color:#ff4544" wx:if="{{(djq.length!=0||zkq.length!=0)&&kdje>0}}">-￥{{kdje}}</view>
+            <view style="color:#999" wx:if="{{(djq.length!=0||zkq.length!=0)&&kdje==0}}">选择优惠券</view>
+            <image class="jtimg" src="../../img/jt.png"></image>
+        </view>
+    </view>
+    <view class="" style="background: #fff;padding:25rpx;margin-top:20rpx;">
+        <view>买家留言</view>
+        <view>
+            <input bindinput="bindkeyinput" name="content" placeholder="请填写备注" style="width:100%;" value="{{content}}"></input>
+        </view>
+    </view>
+</view>
+<view class="coupon-picker" style="background-color:#f7f7f7;" wx:if="{{show_shop}}">
+    <scroll-view class="coupon-list" scrollY="true" style="height: 100%;padding:0;">
+        <view class="shop-block flex-y-center xzfh">
+            <text>您所在的当前地址</text>
+            <text bindtap="ycshow_shop" style="background:{{xtxx.link_color}}">返回</text>
+        </view>
+        <view class="shop-address flex-row flex-y-center">
+            <view class="flex-grow-1">{{location}}</view>
+            <view bindtap="dingwei" class="flex-grow-0 flex-y-center">
+                <image src="../../img/dqdw.png" style="width:35rpx;height:35rpx;margin-right:10rpx;"></image>
+                <text style="color:#ff7f46">手动定位</text>
+            </view>
+        </view>
+        <view class="shop-block flex-y-center">门店列表</view>
+        <view bindtap="pickShop" class="flex-row address-picker" data-index="{{index}}" style="margin:0;" wx:for="{{shop_list}}">
+            <view class="flex-grow-0 flex-y-center">
+                <image src="{{item.id==shop.id?'/images/icon-shop-checked.png':'/images/icon-shop-un.png'}}" style="width: 40rpx;height: 40rpx;margin-right: 20rpx"></image>
+            </view>
+            <view class="flex-grow-1">
+                <view class="flex-row" style="margin-bottom: 20rpx">
+                    <view class="flex-grow-1" style="font-weight:bold;{{item.id==shop.id?'color:#ff4544':''}}">
+ {{item.name}} 
+
+              </view>
+                    <view class="flex-grow-0" wx:if="{{item.distance!=0-1}}">{{item.distance}}</view>
+                </view>
+                <view class="flex-row" style="margin-bottom: 20rpx">
+                    <view class="flex-grow-1">电话：{{item.mobile}}</view>
+                </view>
+                <view>地址：{{item.address}}</view>
+            </view>
+        </view>
+    </scroll-view>
+</view>
+<view catchtap="qdzz" class="zhezhao" hidden="{{qlq}}"></view>
+<view class="qlq" hidden="{{qlq}}">
+    <view class="paixu1">
+        <view bindtap="tabClick" class="{{activeIndex==index?'selected':'default1'}}" id="{{index}}" wx:for="{{listarr}}" wx:key="*this">{{item}}
+      </view>
+    </view>
+    <view class="yhqsm">折扣券与代金券不能同时使用</view>
+    <radio-group bindchange="radioChange" class="radio-group" name="radiogroup">
+        <scroll-view scrollY style="height: 400rpx;">
+            <view hidden="{{activeIndex!=0}}">
+                <label bindtap="xzq" data-full="{{item.full}}" data-kdje="{{item.reduction}}" data-rdid="{{item.coupons_id}}" data-type="代金券" wx:for="{{djq}}">
+                    <view class="mdlist">
+                        <view class="coupon-item unreceive" id="{{item.id}}">
+                            <view class="item-left" style="background:#F65C5C">
+                                <text class="num">{{item.reduction}}</text>
+                                <text class="unit">元</text>
+                            </view>
+                            <view class="item-right">
+                                <text class="name">{{item.Coupons_name}}</text>
+                                <text class="conditions" wx:if="{{item.full!='0'}}">满{{item.full}}可用</text>
+                                <text class="conditions" wx:else>无门槛</text>
+                                <text class="prefer">{{item.start_time}}至{{item.end_time}}</text>
+                            </view>
+                        </view>
+                        <view class="radio">
+                            <radio checked="{{activeradio==item.coupons_id}}" color="#FF9700" disabled="{{xj<item.full}}" value="{{item.coupons_id}}"></radio>
+                        </view>
+                    </view>
+                </label>
+                <view class="kong" wx:if="{{djq.length==0}}">
+                    <image src="../../img/wushuju.png"></image>
+                    <view>暂无此门店的代金券</view>
+                </view>
+            </view>
+            <view hidden="{{activeIndex!=1}}">
+                <label bindtap="xzq" data-full="{{item.full}}" data-kdje="{{item.reduction}}" data-rdid="{{item.coupons_id}}" data-type="折扣券" wx:for="{{zkq}}">
+                    <view class="mdlist">
+                        <view class="coupon-item unreceive" id="{{item.id}}">
+                            <view class="item-left" style="background:#5CBDEA">
+                                <text class="num">{{item.reduction}}</text>
+                                <text class="unit">折</text>
+                            </view>
+                            <view class="item-right">
+                                <text class="name">{{item.Coupons_name}}</text>
+                                <text class="conditions" wx:if="{{item.full!='0'}}">满{{item.full}}可用</text>
+                                <text class="conditions" wx:else>无门槛</text>
+                                <text class="prefer">{{item.start_time}}至{{item.end_time}}</text>
+                            </view>
+                        </view>
+                        <view class="radio">
+                            <radio checked="{{activeradio==item.coupons_id}}" color="#FF9700" disabled="{{xj<item.full}}" value="{{item.coupons_id}}"></radio>
+                        </view>
+                    </view>
+                </label>
+                <view class="kong" wx:if="{{zkq.length==0}}">
+                    <image src="../../img/wushuju.png"></image>
+                    <view>暂无此门店的折扣券</view>
+                </view>
+            </view>
+        </scroll-view>
+    </radio-group>
+</view>
+<form bindreset="formReset" bindsubmit="formSubmit" reportSubmit="true">
+    <view bindtap="yczz" class="drawer_screen" wx:if="{{showModal}}"></view>
+    <view class="drawer_box" wx:if="{{showModal}}">
+        <view class="drawer_title">请选择支付方式</view>
+        <view class="weui-cells weui-cells_after-title">
+            <radio-group bindchange="radioChange1" class="radio-group" name="radiogroup">
+                <label>
+                    <view class="weui-cell">
+                        <view class="zfimg">
+                            <image src="../../img/weixin.png"></image>
+                        </view>
+                        <view class="weui-cell__bd">微信支付</view>
+                        <view class="weui-cell__ft">
+                            <radio checked="{{zffs==1}}" value="wxzf"></radio>
+                        </view>
+                    </view>
+                </label>
+                <label wx:if="{{kqyue}}">
+                    <view class="weui-cell" style="border-top:1rpx solid #e6e6e6;">
+                        <view class="zfimg">
+                            <image src="../../img/yeqb.png"></image>
+                        </view>
+                        <view class="weui-cell__bd">余额支付
+              <text class="yetext">您的余额 {{userInfo.wallet}}</text>
+                        </view>
+                        <view class="weui-cell__ft">
+                            <radio checked="{{zffs==2}}" color="#FF9700" disabled="{{!kqyue}}" value="yezf"></radio>
+                        </view>
+                    </view>
+                </label>
+                <label wx:if="{{kqjf}}">
+                    <view class="weui-cell" style="border-top:1rpx solid #e6e6e6;">
+                        <view class="zfimg">
+                            <image src="../../img/cost.png" style="height:50rpx;"></image>
+                        </view>
+                        <view class="weui-cell__bd">积分支付
+              <text class="yetext" style="color:#F56E1D">您的积分 {{integral}}</text>
+                        </view>
+                        <view class="weui-cell__ft">
+                            <radio checked="{{zffs==3}}" color="#F56E1D" disabled="{{!kqjf}}" value="jfzf"></radio>
+                        </view>
+                    </view>
+                </label>
+            </radio-group>
+        </view>
+        <view class="drawer_title1">您选择的{{zfwz}}
+      <text wx:if="{{zffs==3}}">({{jf_proportion}}积分可抵1元)</text>
+        </view>
+        <button class="{{btntype}}" disabled="{{zfz}}" formType="submit">
+            <view wx:if="{{!zfz}}">确定支付
+        <text class="zftext">￥{{totalprice}}</text>
+            </view>
+            <view wx:if="{{zfz}}">
+                <text class="zfztext">支付中...</text>
+            </view>
+        </button>
+    </view>
+</form>

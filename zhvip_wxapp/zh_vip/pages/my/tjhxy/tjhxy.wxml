@@ -1,0 +1,15 @@
+<view class="container">
+    <view class="head">
+        <view class="head-img">
+            <image src="data:image/png;base64,{{hxm}}"></image>
+        </view>
+        <view class="head-name">扫一扫，添加核销员</view>
+    </view>
+    <view class="hxy" wx:if="{{hxylist.length!=0}}">核销员</view>
+    <view class="hxylist" wx:for="{{hxylist}}">
+        <image src="{{item.img}}"></image>
+        <view class="hxy-bd">{{item.nickname}}</view>
+        <view bindtap="sc" class="sc" data-uid="{{item.id}}">删除</view>
+    </view>
+    <view class="hxy" wx:if="{{hxylist.length==0}}">暂未添加核销员</view>
+</view>

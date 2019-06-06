@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://www.we7.cc" versionCode="">
+	<application setting="false">
+		<name><![CDATA[志汇-门店会员卡小程序]]></name>
+		<identifie><![CDATA[zh_vip]]></identifie>
+		<version><![CDATA[4.8.2]]></version>
+		<type><![CDATA[activity]]></type>
+		<ability><![CDATA[志汇-门店会员卡，为商户提供更有效更全面的会员管理与营销工具.让门店商户获得:更多的潜在顾客......]]></ability>
+		<description><![CDATA[会员管理系统,会员营销,积分管理,微信会员卡营销,储值卡消费管理,功能全操作易!11年行业经验,系统稳定,资金安全.]]></description>
+		<author><![CDATA[淘宝柠檬鱼科技]]></author>
+		<url><![CDATA[https://shop486845690.taobao.com]]></url>
+	</application>
+	<platform>
+		<subscribes>
+		</subscribes>
+		<handles>
+		</handles>
+		<rule embed="false" />
+		<card embed="false" />
+		<supports>
+
+			<item type="wxapp" />
+		</supports>
+	</platform>
+	<bindings>
+
+		<page>
+
+			<entry title="首页" do="/zh_vip/pages/index/index" state="" direct="" />
+
+		</page>
+	</bindings>
+	<permissions>
+	</permissions>
+	<install><![CDATA[anzhuang.php]]></install>
+	<uninstall><![CDATA[]]></uninstall>
+	<upgrade><![CDATA[gengxin.php]]></upgrade>
+</manifest>

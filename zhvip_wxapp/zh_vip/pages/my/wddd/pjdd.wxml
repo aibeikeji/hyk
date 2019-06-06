@@ -1,0 +1,46 @@
+<view class="goods-list">
+    <view class="goods-item" wx:for="{{goods_list}}">
+        <view class="flex-row flex-y-center score-row" style="padding:10rpx 20rpx;">
+            <image class="goods-pic" src="{{url}}{{item.img}}"></image>
+            <view style="margin-left:30rpx;">{{item.name}}</view>
+        </view>
+        <view class="flex-row score-row">
+            <view class="flex-grow-1 flex-row">
+                <view bindtap="setScore" class="flex-grow-1 score-item flex-y-center flex-x-center {{item.score==1?'active':''}}" data-index="{{index}}" data-score="1">
+                    <image src="../../../img/icon-comment-score-3{{item.score==1?'.active':''}}.png"></image>
+                    <text>好评</text>
+                </view>
+                <view bindtap="setScore" class="flex-grow-1 score-item flex-y-center flex-x-center {{item.score==2?'active':''}}" data-index="{{index}}" data-score="2">
+                    <image src="../../../img/icon-comment-score-2{{item.score==2?'.active':''}}.png"></image>
+                    <text>中评</text>
+                </view>
+                <view bindtap="setScore" class="flex-grow-1 score-item flex-y-center flex-x-center {{item.score==3?'active':''}}" data-index="{{index}}" data-score="3">
+                    <image src="../../../img/icon-comment-score-1{{item.score==3?'.active':''}}.png"></image>
+                    <text>差评</text>
+                </view>
+            </view>
+        </view>
+        <view class="banner">
+            <textarea bindinput="contentInput" data-index="{{index}}" maxlength="100" placeholder="要评价的内容..." placeholderStyle="color:#999;"></textarea>
+            <view class="mdtp1">
+                <view class="weui-uploader__bd">
+                    <view class="weui-uploader__files" id="uploaderFiles">
+                        <view class="weui-uploader__file" wx:for="{{item.pic_list}}" wx:for-index="pic_index">
+                            <view bindtap="deleteImage" class="x" data-index="{{index}}" data-pic-index="{{pic_index}}">
+                                <image src="../../../img/close.png"></image>
+                            </view>
+                            <image bindtap="previewImage" class="weui-uploader__img" mode="aspectFill" src="{{url2}}{{item}}"></image>
+                        </view>
+                    </view>
+                    <view class="weui-uploader__input-box" wx:if="{{!item.pic_list||item.pic_list.length<3}}">
+                        <view bindtap="chooseImage" class="weui-uploader__input" data-index="{{index}}"></view>
+                    </view>
+                </view>
+                <view class="tpsl">{{item.pic_list.length}}/3</view>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="bar-bottom">
+    <view bindtap="commentSubmit" class="submit-btn flex-x-center flex-y-center">提交</view>
+</view>

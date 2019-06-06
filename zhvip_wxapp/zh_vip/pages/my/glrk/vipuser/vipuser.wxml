@@ -1,0 +1,54 @@
+<view class="vip">
+    <view class="vuheader">
+        <view class="vuhbox flex-center">
+            <image class="vuhboximg" src="../../../../img/vsearch.png"></image>
+            <input bindconfirm="confirm" bindinput="bindinput" class="vuhboxinput" confirmType="search" placeholder="请输入编号/手机号/姓名" placeholderStyle="color:#999;font-size: 26rpx;" type="text"></input>
+        </view>
+    </view>
+    <view class="vubanner">
+        <view class="jzz" hidden="{{qqsj}}">
+            <image class="Rotation" src="../../../../img/jzz.png"></image>
+            <view>加载中...</view>
+        </view>
+        <block wx:if="{{qqsj}}">
+            <view bindtap="vipuserinfo" class="vublist" data-id="{{item.id}}" wx:for="{{hyarr}}">
+                <image class="vublistimg" src="{{item.img}}"></image>
+                <view class="vublistright">
+                    <view class="flex-bet">
+                        <view>{{item.name}}</view>
+                        <view class="vipnumber">编号:{{item.vip_number}}</view>
+                    </view>
+                    <view class="vublfont2">卡号:{{item.vip_code}}</view>
+                    <view class="vublfont3">会员卡余额：
+            <text class="vublfont4">{{item.wallet}}</text>元
+            <text class="vublxiao">消费次数：</text>
+                        <text class="vublfont4">{{item.ordernum}}</text>次
+          </view>
+                </view>
+            </view>
+            <view class="jzz" hidden="{{jzgd}}">
+                <image class="Rotation" src="../../../../img/jzz.png"></image>
+                <view>加载中...</view>
+            </view>
+            <view class="kong" wx:if="{{hyarr.length==0}}">
+                <image src="../../../../img/wushuju.png"></image>
+                <view>暂无符合您搜索的数据</view>
+            </view>
+            <view class="jzwb" wx:if="{{mygd}}">
+                <view class="hx"></view>
+                <view class="wz">加载完毕</view>
+                <view class="hx"></view>
+            </view>
+        </block>
+    </view>
+    <view class="vfoot">
+        <view bindtap="vipseller" class="vflist flex1">
+            <image class="vfimg" src="../../../../img/vhome.png"></image>
+            <view>商户中心</view>
+        </view>
+        <view class="vflist flex1">
+            <image class="vfimg" src="../../../../img/vzuansele.png"></image>
+            <view class="vffont">会员</view>
+        </view>
+    </view>
+</view>

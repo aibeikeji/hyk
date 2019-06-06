@@ -1,0 +1,61 @@
+<view class="head flex4">
+    <image class="headimg" src="{{url}}{{mdinfo.md_img}}"></image>
+    <view>充值门店：{{mdinfo.name}}</view>
+</view>
+<view class="wallet">
+    <view class="mywallet">
+        <view class="title">我的余额(元)</view>
+        <view class="flex-bet mywallet_info">
+            <view class="flex-center">
+                <image class="wallet_img" src="{{userInfo.img}}"></image>
+                <view class="flex6">
+                    <view>{{userInfo.name}}</view>
+                    <view>{{userInfo.tel}}</view>
+                </view>
+            </view>
+            <view bindtap="tixian" class="flex-center">
+                <view class="walletcash">{{userInfo.level_name}}</view>
+            </view>
+        </view>
+    </view>
+</view>
+<form bindsubmit="formSubmit" reportSubmit="true">
+    <view bindtap="tradeinfo" class="list flex-bet" wx:if="{{czhd.length!=0}}">
+        <view class="flex-center trade">
+            <view class="">充值活动</view>
+        </view>
+        <view class="czhd">
+            <swiper autoplay="true" circular="true" duration="500" interval="2000" style="height:90rpx;width:400rpx;" vertical="true">
+                <swiper-item wx:for="{{czhd}}">
+                    <view>充值满
+            <text>{{item.full}}</text>元立即送
+            <text>{{item.reduction}}</text>元</view>
+                </swiper-item>
+            </swiper>
+            <image class="addright {{open?'show':''}}" src="../../img/huise@2x.png"></image>
+        </view>
+    </view>
+    <view class="czhd1" hidden="{{!open}}">
+        <view wx:for="{{czhd}}">充值满
+      <text>{{item.full}}</text>元立即送
+      <text>{{item.reduction}}</text>元</view>
+    </view>
+    <view class="wallet">
+        <view class="cash">
+            <view class="cash_title">当前余额
+        <text class="money">¥{{userInfo.wallet}}</text>
+            </view>
+            <view class="cash_title flex-center" style="border:none">充值金额
+        <input bindinput="bindInput" class="cash_inp" name="czje" placeholder="请输入充值金额" placeholderStyle="color:#999;" type="digit"></input>
+            </view>
+        </view>
+        <button class="tijiao" disabled="{{kong}}" formType="submit" style="background:{{kong?'#F7BC6A':'#ff7f46'}};">充值</button>
+    </view>
+</form>
+<view class="copyright">
+    <view bindtap="tzxcx" class="copyright_logo" data-appid="{{xtxx.tz_appid}}">
+        <image class="copyright_img" mode="aspectFill" src="{{url}}{{xtxx.bq_logo}}"></image>
+        <view class="copyright_text">{{xtxx.bq_name}}</view>
+    </view>
+    <view class="copyright_txt">{{xtxx.support}}</view>
+</view>
